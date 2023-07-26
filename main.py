@@ -81,7 +81,7 @@ customtkinter.set_widget_scaling(1)
 app = customtkinter.CTk()
 app.geometry("920x680")
 app.minsize(920, 680)
-app.iconphoto(False, tk.PhotoImage(file="icon.png"))
+#app.iconphoto(False, tk.PhotoImage(file="icon.png"))
 app.title("Converter")
 
 app.grid_columnconfigure(1, weight=1)
