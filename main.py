@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import filedialog as fd
 import customtkinter
 
@@ -7,6 +6,7 @@ import os
 
 folderSelected = False
 fileSelected = False
+saveNameSelected = False
 
 fileName = ""
 folderName = ""
@@ -46,7 +46,7 @@ def selectFile():
         global fileSelected
         fileSelected = True
     except:
-       progressLabel.configure(text="An error has occured! Please restart the app and try again")
+       progressLabel.configure(text="An error has occured! Please restart try again")
 
 def selectFolder():
     try:
@@ -56,33 +56,35 @@ def selectFolder():
         global folderSelected
         folderSelected = True
     except:
-       progressLabel.configure(text="An error has occured! Please restart the app and try again")
+       progressLabel.configure(text="An error has occured! Please try again")
 
 def convert():
     try:
         progressLabel.configure(text="Converting...")
         global folderSelected
         global fileSelected
+        global saveNameSelected
 
-        if not (folderSelected and fileSelected):
-            print("test")
+        saveNameSelected = saveNameEntry.get() != ""
+
+        if not (folderSelected and fileSelected and saveNameSelected):
+            progressLabel.configure(text="Progress: Aborted- Please select a file, folder as well as enter a text file name then retry.")
             return
     
         text = pdfToText()
         saveText(text)
         progressLabel.configure(text="Converted!")
     except:
-       progressLabel.configure(text="An error has occured! Please restart the app and try again")
+       progressLabel.configure(text="An error has occured! Please try again")
 
-customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_appearance_mode("Dark")
+customtkinter.set_default_color_theme("green")
 customtkinter.set_widget_scaling(1)
 
 app = customtkinter.CTk()
 app.geometry("920x680")
 app.minsize(920, 680)
-#app.iconphoto(False, tk.PhotoImage(file="icon.png"))
-app.title("Converter")
+app.title("PdfToTxt")
 
 app.grid_columnconfigure(1, weight=1)
 app.grid_rowconfigure(0, weight=1)
@@ -106,7 +108,7 @@ scalingOptions.set("100%")
 scalingOptions.grid(row=4, column=0, pady=(0, 40))
 
 tutorialTitleLabel = customtkinter.CTkLabel(master=sidebarFame, text="Tutorial")
-tutorialTextLabel = customtkinter.CTkLabel(master=sidebarFame, text="1. Select the PDF to\nconvert to text\n2. Select the output\nfolder\n3. Type the name to\nsave the text file\nin the entry\n4.. Hit convert")
+tutorialTextLabel = customtkinter.CTkLabel(master=sidebarFame, text="1. Select the PDF to\nconvert to text\n2. Select the output\nfolder\n3. Type the name to\nsave the text file\nin the entry\n4. Hit convert")
 tutorialTitleLabel.grid(row=5, column=0)
 tutorialTextLabel.grid(row=6, column=0)
 
